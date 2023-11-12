@@ -1,0 +1,15 @@
+# Google Drive Sync Configuration File
+
+# Google Drive base folder path mounted with GNOME "Online Accounts"
+# Your Google Drive should be listed typically with a path like 
+# /run/user/1000/gvfs/google-drive:host=gmail.com,user=your-email
+DRIVE_BASE_FOLDER=""
+
+# Local sync folder path
+LOCAL_FOLDER=""
+
+# Define the Google Drive folder name
+DRIVE_FOLDER_NAME=""
+
+# Array of directories to ignore (space-separated list)
+IGNORE_LIST=("" "")
