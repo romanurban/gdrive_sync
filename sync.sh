@@ -85,13 +85,31 @@ is_ignored() {
     return 1 # item is not ignored
 }
 
+generate_hash() {
+    local file_path="$1"
+    md5sum "$file_path" | awk '{print $1}'
+}
+
 copy_file() {
     local source="$1"
     local target="$2"
-    if [ "$verbose" -eq 1 ]; then
-        log "Copying file from '$source' to '$target'"
+
+    # Generate hashes for source and target
+    local source_hash=$(generate_hash "$source")
+    local target_hash=""
+    if [ -f "$target" ]; then
+        target_hash=$(generate_hash "$target")
     fi
-    gio copy "$source" "$target"
+
+    # Compare hashes and copy if they differ or target does not exist
+    if [ "$source_hash" != "$target_hash" ]; then
+        if [ "$verbose" -eq 1 ]; then
+            log "Copying file from '$source' to '$target'"
+        fi
+        gio copy "$source" "$target"
+    else
+        log "File '$source' is up-to-date, skipping."
+    fi
 }
 
 get_display_name() {
